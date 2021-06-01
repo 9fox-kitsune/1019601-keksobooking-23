@@ -12,8 +12,8 @@ function getRandomNumber(minNumber, maxNumber) {
 
 function getRandomFloatNumber(minFloatNumber, maxFloatNumber, pointRound) {
   if ((minFloatNumber >= 0) && (minFloatNumber < maxFloatNumber)) {
-    let floatRandomNumber = Math.random() * (maxFloatNumber - minFloatNumber) + minFloatNumber;
-    let floatNumber = parseFloat(floatRandomNumber.toFixed(pointRound));
+    const floatRandomNumber = Math.random() * (maxFloatNumber - minFloatNumber) + minFloatNumber;
+    const floatNumber = parseFloat(floatRandomNumber.toFixed(pointRound));
     if ((floatNumber >= minFloatNumber) && (floatNumber <= maxFloatNumber)) {
       return floatNumber;
     }
