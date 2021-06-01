@@ -3,11 +3,6 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 */
 
-// Функция, возвращающая случайное целое число из переданного диапазона включительно. Пример использования функции:
-
-// имя_функции(от, до); // Результат: целое число из диапазона "от...до"
-// Учтите, что диапазон может быть только положительный, включая ноль. А также придумайте, как функция должна вести себя, если передать значение «до» меньшее, чем значение «от», или равное ему.
-
 function getRandomNumber(minNumber, maxNumber) {
   if ((minNumber >= 0) && (minNumber < maxNumber)) {
     return Math.floor(Math.random() * (maxNumber - minNumber + 1) + minNumber);
