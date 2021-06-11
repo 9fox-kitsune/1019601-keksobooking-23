@@ -143,5 +143,4 @@ const objectInfo = () => ({
 
 const objectsNearby = new Array(OBJECT_COUNT).fill(null).map(() => objectInfo());
 
-// eslint-disable-next-line no-console
-console.log(objectsNearby);
+objectsNearby();
