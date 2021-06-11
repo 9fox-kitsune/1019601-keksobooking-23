@@ -74,7 +74,7 @@ const FEATURES_ITEMS_LIST = [
   'conditioner',
 ];
 
-const PHOTOS_ITEMS = [
+const PHOTOS_ITEMS_LIST = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
@@ -86,9 +86,8 @@ const authorAvatar = () => ({
   avatar: getRandomArrayElement(AVATARS),
 });
 
-// features, массив строк — массив случайной длины из значений: wifi, dishwasher, parking, washer, elevator, conditioner. Значения не должны повторяться.
-const featuresLength = getRandomNumber(1, 6);
 const createFeaturesList = () => {
+  const featuresLength = getRandomNumber(1, 6);
   const featuresItems = new Array(featuresLength).fill('');
   for (let i = 0; i <= featuresLength - 1; i++) {
     const randomIndex = getRandomNumber(0, 5);
@@ -101,29 +100,45 @@ const createFeaturesList = () => {
   return featuresItems;
 };
 
+const createPhotosList = () => {
+  const photosItemsListLength = getRandomNumber(1, 3);
+  const photosItems = new Array(photosItemsListLength).fill('');
+  for (let i = 0; i <= photosItemsListLength - 1; i++) {
+    const randomIndex = getRandomNumber(0, 2);
+    if (!photosItems.includes(PHOTOS_ITEMS_LIST[randomIndex])) {
+      photosItems[i] = PHOTOS_ITEMS_LIST[randomIndex];
+    } else {
+      i--;
+    }
+  }
+  return photosItems;
+};
+
 const locations = () => ({
   lat: getRandomFloatNumber(35.65000, 35.70000, 5),
   lng: getRandomFloatNumber(139.70000, 139.80000, 5),
 });
 
+const coordinates = locations();
+
 const offers = () => ({
   title: titles,
-  address: locations.lat + ' ' + locations.lng,
+  address: coordinates.lat + ', ' + coordinates.lng,
   price: getRandomNumber(PRICE_MIN, PRICE_MAX),
   type: getRandomArrayElement(TYPES),
   rooms: getRandomNumber(1, ROOM_MAX),
   guests: getRandomNumber(1, GUESTS_MAX),
   checkin: getRandomArrayElement(CHECKIN_ALL),
   checkout: getRandomArrayElement(CHECKOUT_ALL),
-  features: createFeaturesList,
+  features: createFeaturesList(),
   description: descriptions,
-  photos: getRandomArrayElement(PHOTOS_ITEMS),
+  photos: createPhotosList(),
 });
 
 const objectInfo = () => ({
   author: authorAvatar(),
   offer: offers(),
-  location: locations(),
+  location: coordinates,
 });
 
 const objectsNearby = new Array(OBJECT_COUNT).fill(null).map(() => objectInfo());
