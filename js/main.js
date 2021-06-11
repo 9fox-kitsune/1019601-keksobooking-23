@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable id-length */
 /* eslint-disable prefer-template */
 /* Использованые ссылки:
@@ -142,5 +143,3 @@ const objectInfo = () => ({
 });
 
 const objectsNearby = new Array(OBJECT_COUNT).fill(null).map(() => objectInfo());
-
-objectsNearby();
