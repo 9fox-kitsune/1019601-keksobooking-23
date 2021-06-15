@@ -1,34 +1,17 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable id-length */
 /* eslint-disable prefer-template */
+/* eslint-disable id-length */
+/* eslint-disable no-console */
 /* Использованые ссылки:
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed
 https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 */
-
-function getRandomNumber(minNumber, maxNumber) {
-  if ((minNumber >= 0) && (minNumber < maxNumber)) {
-    return Math.floor(Math.random() * (maxNumber - minNumber + 1) + minNumber);
-  }
-  return 'Заданные числа не соответствуют условиям!';
-}
-
-function getRandomFloatNumber(minFloatNumber, maxFloatNumber, pointRound) {
-  if ((minFloatNumber >= 0) && (minFloatNumber < maxFloatNumber)) {
-    const FLOAT_RANDOM_NUMBER = Math.random() * (maxFloatNumber - minFloatNumber) + minFloatNumber;
-    const FLOAT_NUMBER = parseFloat(FLOAT_RANDOM_NUMBER.toFixed(pointRound));
-    if ((FLOAT_NUMBER >= minFloatNumber) && (FLOAT_NUMBER <= maxFloatNumber)) {
-      return FLOAT_NUMBER;
-    }
-  }
-  return 'Заданные числа не соответствуют условиям!';
-}
 
 const PRICE_MIN = 5000;
 const PRICE_MAX = 25000;
 const ROOM_MAX = 5;
 const GUESTS_MAX = 10;
 const OBJECT_COUNT = 10;
+let coordinates;
 
 const AVATARS = [
   'img/avatars/user01.png',
@@ -43,8 +26,12 @@ const AVATARS = [
   'img/avatars/user10.png',
 ];
 
-const titles = 'Сдается отличный вариант!';
-const descriptions = 'Просторная, светлая, уютная';
+const TITLES = [
+  'Сдается отличный вариант!',
+  'Хорошая цена, отличное качество!',
+  'Сдается недорого.',
+  'Лучшее только у нас!',
+];
 
 const TYPES = [
   'palace',
@@ -75,15 +62,40 @@ const FEATURES_ITEMS_LIST = [
   'conditioner',
 ];
 
+const DESCRIPTIONS = [
+  'Просторная, светлая, уютная',
+  'Имеется вся мебель и техника.',
+  'Заезжай и живи, все есть.',
+  'Все платежи включены в стоимость.',
+];
+
 const PHOTOS_ITEMS_LIST = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
 
+function getRandomNumber(minNumber, maxNumber) {
+  if ((minNumber >= 0) && (minNumber < maxNumber)) {
+    return Math.floor(Math.random() * (maxNumber - minNumber + 1) + minNumber);
+  }
+  return 'Заданные числа не соответствуют условиям!';
+}
+
+function getRandomFloatNumber(minFloatNumber, maxFloatNumber, pointRound) {
+  if ((minFloatNumber >= 0) && (minFloatNumber < maxFloatNumber)) {
+    const FLOAT_RANDOM_NUMBER = Math.random() * (maxFloatNumber - minFloatNumber) + minFloatNumber;
+    const FLOAT_NUMBER = parseFloat(FLOAT_RANDOM_NUMBER.toFixed(pointRound));
+    if ((FLOAT_NUMBER >= minFloatNumber) && (FLOAT_NUMBER <= maxFloatNumber)) {
+      return FLOAT_NUMBER;
+    }
+  }
+  return 'Заданные числа не соответствуют условиям!';
+}
+
 const getRandomArrayElement = (elements) => elements[getRandomNumber(0, elements.length - 1)];
 
-const authorAvatar = () => ({
+const getAuthorAvatar = () => ({
   avatar: getRandomArrayElement(AVATARS),
 });
 
@@ -115,31 +127,34 @@ const createPhotosList = () => {
   return photosItems;
 };
 
-const locations = () => ({
+const getLocation = () => ({
   lat: getRandomFloatNumber(35.65000, 35.70000, 5),
   lng: getRandomFloatNumber(139.70000, 139.80000, 5),
 });
 
-const coordinates = locations();
+const getOffer = () => {
+  coordinates = getLocation();
+  return {
+    title: getRandomArrayElement(TITLES),
+    address: coordinates.lat + ', ' + coordinates.lng,
+    price: getRandomNumber(PRICE_MIN, PRICE_MAX),
+    type: getRandomArrayElement(TYPES),
+    rooms: getRandomNumber(1, ROOM_MAX),
+    guests: getRandomNumber(1, GUESTS_MAX),
+    checkin: getRandomArrayElement(CHECKIN_ALL),
+    checkout: getRandomArrayElement(CHECKOUT_ALL),
+    features: createFeaturesList(),
+    description: getRandomArrayElement(DESCRIPTIONS),
+    photos: createPhotosList(),
+  };
+};
 
-const offers = () => ({
-  title: titles,
-  address: coordinates.lat + ', ' + coordinates.lng,
-  price: getRandomNumber(PRICE_MIN, PRICE_MAX),
-  type: getRandomArrayElement(TYPES),
-  rooms: getRandomNumber(1, ROOM_MAX),
-  guests: getRandomNumber(1, GUESTS_MAX),
-  checkin: getRandomArrayElement(CHECKIN_ALL),
-  checkout: getRandomArrayElement(CHECKOUT_ALL),
-  features: createFeaturesList(),
-  description: descriptions,
-  photos: createPhotosList(),
-});
-
-const objectInfo = () => ({
-  author: authorAvatar(),
-  offer: offers(),
+const getObjectInfo = () => ({
+  author: getAuthorAvatar(),
+  offer: getOffer(),
   location: coordinates,
 });
 
-const objectsNearby = new Array(OBJECT_COUNT).fill(null).map(() => objectInfo());
+const objectsNearby = new Array(OBJECT_COUNT).fill(null).map(() => getObjectInfo());
+
+console.log(objectsNearby);
