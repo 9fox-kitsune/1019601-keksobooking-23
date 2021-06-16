@@ -11,7 +11,6 @@ const PRICE_MAX = 25000;
 const ROOM_MAX = 5;
 const GUESTS_MAX = 10;
 const OBJECT_COUNT = 10;
-let coordinates;
 
 const AVATARS = [
   'img/avatars/user01.png',
@@ -75,6 +74,7 @@ const PHOTOS_ITEMS_LIST = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
 
+// Функция получения случайного целого числа
 function getRandomNumber(minNumber, maxNumber) {
   if ((minNumber >= 0) && (minNumber < maxNumber)) {
     return Math.floor(Math.random() * (maxNumber - minNumber + 1) + minNumber);
@@ -82,6 +82,7 @@ function getRandomNumber(minNumber, maxNumber) {
   return 'Заданные числа не соответствуют условиям!';
 }
 
+// Функция получения случайного дробного числа
 function getRandomFloatNumber(minFloatNumber, maxFloatNumber, pointRound) {
   if ((minFloatNumber >= 0) && (minFloatNumber < maxFloatNumber)) {
     const FLOAT_RANDOM_NUMBER = Math.random() * (maxFloatNumber - minFloatNumber) + minFloatNumber;
@@ -93,12 +94,15 @@ function getRandomFloatNumber(minFloatNumber, maxFloatNumber, pointRound) {
   return 'Заданные числа не соответствуют условиям!';
 }
 
+// Функция получения случайного индекса массива
 const getRandomArrayElement = (elements) => elements[getRandomNumber(0, elements.length - 1)];
 
+//Функция получения информации об авторе
 const getAuthorAvatar = () => ({
   avatar: getRandomArrayElement(AVATARS),
 });
 
+// Функция создания массива, содержащего инфо об удобствах объекта
 const createFeaturesList = () => {
   const featuresLength = getRandomNumber(1, 6);
   const featuresItems = new Array(featuresLength).fill('');
@@ -113,6 +117,7 @@ const createFeaturesList = () => {
   return featuresItems;
 };
 
+// Функция создания массива, содержащего фото объекта
 const createPhotosList = () => {
   const photosItemsListLength = getRandomNumber(1, 3);
   const photosItems = new Array(photosItemsListLength).fill('');
@@ -127,14 +132,16 @@ const createPhotosList = () => {
   return photosItems;
 };
 
+// Функция получения местоположения объекта
 const getLocation = () => ({
   lat: getRandomFloatNumber(35.65000, 35.70000, 5),
   lng: getRandomFloatNumber(139.70000, 139.80000, 5),
 });
 
-const getOffer = () => {
-  coordinates = getLocation();
-  return {
+// Функция получения полной информации об объекте
+const getObjectInfo = () => {
+  const coordinates = getLocation();
+  const getOffer = () => ({
     title: getRandomArrayElement(TITLES),
     address: coordinates.lat + ', ' + coordinates.lng,
     price: getRandomNumber(PRICE_MIN, PRICE_MAX),
@@ -146,14 +153,13 @@ const getOffer = () => {
     features: createFeaturesList(),
     description: getRandomArrayElement(DESCRIPTIONS),
     photos: createPhotosList(),
+  });
+  return {
+    author: getAuthorAvatar(),
+    offer: getOffer(),
+    location: coordinates,
   };
 };
-
-const getObjectInfo = () => ({
-  author: getAuthorAvatar(),
-  offer: getOffer(),
-  location: coordinates,
-});
 
 const objectsNearby = new Array(OBJECT_COUNT).fill(null).map(() => getObjectInfo());
 
