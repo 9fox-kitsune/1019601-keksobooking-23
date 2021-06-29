@@ -1,4 +1,4 @@
-import './utils/util';
-import './utils/data';
-import './utils/post';
-import './utils/message';
+import './utils/util.js';
+import './utils/data.js';
+import './utils/post.js';
+import './utils/message.js';

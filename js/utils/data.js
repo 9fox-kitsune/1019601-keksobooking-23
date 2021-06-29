@@ -1,6 +1,6 @@
 // *** МОДУЛЬ СОЗДАНИЯ ДАННЫХ
 
-import {getObjectInfo} from './util';
+import {getObjectInfo} from './util.js';
 
 const OBJECT_COUNT = 10;
 

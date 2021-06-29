@@ -2,6 +2,6 @@
 
 /* eslint-disable no-console */
 
-import {objectsNearby} from './data';
+import {objectsNearby} from './data.js';
 
 console.log(objectsNearby);
